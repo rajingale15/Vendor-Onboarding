@@ -1,8 +1,9 @@
+// src/App.tsx
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom"; // 👈 switched to HashRouter
 import Index from "./pages/Index";
 import VendorOnboarding from "./pages/VendorOnboarding";
 import VendorDashboard from "./pages/VendorDashboard";
@@ -13,17 +14,20 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      {/* Global toasts/notifications */}
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+
+      {/* GitHubPages‑friendly routing */}
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/vendor-onboarding" element={<VendorOnboarding />} />
           <Route path="/vendor-dashboard" element={<VendorDashboard />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Catch‑all route must be last */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
